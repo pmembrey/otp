@@ -919,13 +919,13 @@ int ei_send(int fd, erlang_pid* to, char* buf, int len)
 */
 
 int ei_do_receive_msg(int fd, int staticbuffer_p, 
-		      erlang_msg* msg, ei_x_buff* x, unsigned ms)
+		      erlang_msg* msg, ei_x_buff* x, unsigned ms, int auto_tick)
 {
     int msglen;
     int i;
     
     if (!(i=ei_recv_internal(fd, &x->buff, &x->buffsz, msg, &msglen, 
-	staticbuffer_p, ms))) {
+	staticbuffer_p, ms, auto_tick))) {
 	erl_errno = EAGAIN;
 	return ERL_TICK;
     }
