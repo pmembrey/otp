@@ -73,7 +73,7 @@ ei_recv_internal (int fd,
   len = get32be(s);
 
   /* got tick - respond and return */
-  if (!len) {
+  if (!len && auto_tick == ERL_TICK_AUTO) {
     char tock[] = {0,0,0,0};
     ei_write_fill_t(fd, tock, sizeof(tock), ms); /* Failure no problem */
     *msglenp = 0;
