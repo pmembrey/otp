@@ -38,13 +38,24 @@
 #include "ei_trace.h"
 #include "show_msg.h"
 
+#include "ei_send_tock.h"
+
 #include <errno.h>
 
 #define EIRECVBUF 2048 /* largest possible header is approx 1300 bytes */
 
-/* length (4), PASS_THOUGH (1), header, message */
+
 int 
 ei_recv_internal (int fd, 
+		  char **mbufp, int *bufsz, 
+		  erlang_msg *msg, int *msglenp, 
+		  int staticbufp, unsigned ms)
+{
+  return(ei_recv_internal_with_tick(fd, mbufp, bufsz, msg, msglenp, staticbufp, ms, ERL_TICK_AUTO));
+}
+/* length (4), PASS_THOUGH (1), header, message */
+int 
+ei_recv_internal_with_tick (int fd, 
 		  char **mbufp, int *bufsz, 
 		  erlang_msg *msg, int *msglenp, 
 		  int staticbufp, unsigned ms,
@@ -74,8 +85,7 @@ ei_recv_internal (int fd,
 
   /* got tick - respond and return */
   if (!len && auto_tick == ERL_TICK_AUTO) {
-    char tock[] = {0,0,0,0};
-    ei_write_fill_t(fd, tock, sizeof(tock), ms); /* Failure no problem */
+    ei_send_tock(fd, ms);
     *msglenp = 0;
     return 0;			/* maybe flag ERL_EAGAIN [sverkerw] */
   }

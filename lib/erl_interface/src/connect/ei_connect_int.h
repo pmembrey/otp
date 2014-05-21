@@ -112,7 +112,10 @@ const char* ei_getfdcookie(int fd);
 short       ei_thiscreation(const ei_cnode* ec);
 const char *ei_thiscookie(const ei_cnode* ec);
 
-int ei_do_receive_msg(int fd, int staticbuffer_p, 
+int ei_do_receive_msg_with_tick(int fd, int staticbuffer_p, 
 		      erlang_msg* msg, ei_x_buff* x, unsigned ms, int auto_tick);
+
+int ei_do_receive_msg(int fd, int staticbuffer_p, 
+		      erlang_msg* msg, ei_x_buff* x, unsigned ms);
 
 #endif /* _EI_CONNECT_H */

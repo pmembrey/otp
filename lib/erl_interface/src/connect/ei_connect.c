@@ -835,13 +835,16 @@ error:
     return ERL_ERROR;
 } /* ei_accept */
 
-
+int ei_receive_tmo(int fd, unsigned char *bufp, int bufsize, unsigned ms)
+{
+    return(ei_receive_tmo_with_tick(fd, bufp, bufsize, ms, ERL_TICK_AUTO));
+}
 /* Receives a message from an Erlang socket.
  * If the message was a TICK it is immediately
  * answered. Returns: ERL_ERROR, ERL_TICK or
  * the number of bytes read.
  */
-int ei_receive_tmo(int fd, unsigned char *bufp, int bufsize, unsigned ms) 
+int ei_receive_tmo_with_tick(int fd, unsigned char *bufp, int bufsize, unsigned ms, int auto_tick) 
 {
     int len;
     unsigned char fourbyte[4]={0,0,0,0};
@@ -853,7 +856,7 @@ int ei_receive_tmo(int fd, unsigned char *bufp, int bufsize, unsigned ms)
     }
     
     /* Tick handling */
-    if ((len = get_int32(bufp)) == ERL_TICK) 
+    if ((len = get_int32(bufp)) == ERL_TICK && auto_tick == ERL_TICK_AUTO) 
     {
 	ei_write_fill_t(fd, (char *) fourbyte, 4, ms);
 	/* FIXME ok to ignore error or timeout? */
@@ -880,6 +883,11 @@ int ei_receive(int fd, unsigned char *bufp, int bufsize)
 {
     return ei_receive_tmo(fd, bufp, bufsize, 0);
 } 
+
+int ei_receive_with_tick(int fd, unsigned char *bufp, int bufsize, int auto_tick)
+{
+    return ei_receive_tmo_with_tick(fd, bufp, bufsize, 0, auto_tick);
+}
 
 int ei_reg_send_tmo(ei_cnode* ec, int fd, char *server_name,
 		    char* buf, int len, unsigned ms)
@@ -912,19 +920,24 @@ int ei_send(int fd, erlang_pid* to, char* buf, int len)
 }
 
 
+int ei_do_receive_msg(int fd, int staticbuffer_p,
+              erlang_msg* msg, ei_x_buff* x, unsigned ms)
+{
+  return(ei_do_receive_msg_with_tick(fd, staticbuffer_p, msg, x, ms, ERL_TICK_AUTO));
+}
 /* 
 * Try to receive an Erlang message on a given socket. Returns
 * ERL_TICK, ERL_MSG, or ERL_ERROR. Sets `erl_errno' on ERL_ERROR and
 * ERL_TICK (to EAGAIN in the latter case).
 */
 
-int ei_do_receive_msg(int fd, int staticbuffer_p, 
+int ei_do_receive_msg_with_tick(int fd, int staticbuffer_p, 
 		      erlang_msg* msg, ei_x_buff* x, unsigned ms, int auto_tick)
 {
     int msglen;
     int i;
     
-    if (!(i=ei_recv_internal(fd, &x->buff, &x->buffsz, msg, &msglen, 
+    if (!(i=ei_recv_internal_with_tick(fd, &x->buff, &x->buffsz, msg, &msglen, 
 	staticbuffer_p, ms, auto_tick))) {
 	erl_errno = EAGAIN;
 	return ERL_TICK;
@@ -965,23 +978,46 @@ int ei_do_receive_msg(int fd, int staticbuffer_p,
 
 int ei_receive_msg(int fd, erlang_msg* msg, ei_x_buff* x)
 {
-    return ei_do_receive_msg(fd, 1, msg, x, 0, ERL_TICK_AUTO);
+    return ei_do_receive_msg(fd, 1, msg, x, 0);
 }
 
 int ei_xreceive_msg(int fd, erlang_msg *msg, ei_x_buff *x)
 {
-    return ei_do_receive_msg(fd, 0, msg, x, 0, ERL_TICK_AUTO);
+    return ei_do_receive_msg(fd, 0, msg, x, 0);
 }
 
 int ei_receive_msg_tmo(int fd, erlang_msg* msg, ei_x_buff* x, unsigned ms)
 {
-    return ei_do_receive_msg(fd, 1, msg, x, ms, ERL_TICK_AUTO);
+    return ei_do_receive_msg(fd, 1, msg, x, ms);
 }
 
 int ei_xreceive_msg_tmo(int fd, erlang_msg *msg, ei_x_buff *x, unsigned ms)
 {
-    return ei_do_receive_msg(fd, 0, msg, x, ms, ERL_TICK_AUTO);
+    return ei_do_receive_msg(fd, 0, msg, x, ms);
 }
+
+/* New functions to disable auto tick */
+
+int ei_receive_msg_mt(int fd, erlang_msg* msg, ei_x_buff* x)
+{
+    return ei_do_receive_msg_with_tick(fd, 1, msg, x, 0, ERL_TICK_MANUAL);
+}
+
+int ei_xreceive_msg_mt(int fd, erlang_msg *msg, ei_x_buff *x)
+{
+    return ei_do_receive_msg_with_tick(fd, 0, msg, x, 0, ERL_TICK_MANUAL);
+}
+
+int ei_receive_msg_tmo_mt(int fd, erlang_msg* msg, ei_x_buff* x, unsigned ms)
+{
+    return ei_do_receive_msg_with_tick(fd, 1, msg, x, ms, ERL_TICK_MANUAL);
+}
+
+int ei_xreceive_msg_tmo_mt(int fd, erlang_msg *msg, ei_x_buff *x, unsigned ms)
+{
+    return ei_do_receive_msg_with_tick(fd, 0, msg, x, ms, ERL_TICK_MANUAL);
+}
+
 
 /* 
 * The RPC consists of two parts, send and receive.
