@@ -965,22 +965,22 @@ int ei_do_receive_msg(int fd, int staticbuffer_p,
 
 int ei_receive_msg(int fd, erlang_msg* msg, ei_x_buff* x)
 {
-    return ei_do_receive_msg(fd, 1, msg, x, 0);
+    return ei_do_receive_msg(fd, 1, msg, x, 0, ERL_TICK_AUTO);
 }
 
 int ei_xreceive_msg(int fd, erlang_msg *msg, ei_x_buff *x)
 {
-    return ei_do_receive_msg(fd, 0, msg, x, 0);
+    return ei_do_receive_msg(fd, 0, msg, x, 0, ERL_TICK_AUTO);
 }
 
 int ei_receive_msg_tmo(int fd, erlang_msg* msg, ei_x_buff* x, unsigned ms)
 {
-    return ei_do_receive_msg(fd, 1, msg, x, ms);
+    return ei_do_receive_msg(fd, 1, msg, x, ms, ERL_TICK_AUTO);
 }
 
 int ei_xreceive_msg_tmo(int fd, erlang_msg *msg, ei_x_buff *x, unsigned ms)
 {
-    return ei_do_receive_msg(fd, 0, msg, x, ms);
+    return ei_do_receive_msg(fd, 0, msg, x, ms, ERL_TICK_AUTO);
 }
 
 /* 
