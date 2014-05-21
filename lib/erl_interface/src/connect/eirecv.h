@@ -21,6 +21,6 @@
 
 /* Internal interface */
 int ei_recv_internal(int fd, char **mbufp, int *bufsz, erlang_msg *msg,
-		     int *msglenp, int staticbufp, unsigned ms);
+		     int *msglenp, int staticbufp, unsigned ms, int auto_tick);
 
 #endif /* _EIRECV_H */

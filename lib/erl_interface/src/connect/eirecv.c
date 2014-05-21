@@ -47,7 +47,8 @@ int
 ei_recv_internal (int fd, 
 		  char **mbufp, int *bufsz, 
 		  erlang_msg *msg, int *msglenp, 
-		  int staticbufp, unsigned ms)
+		  int staticbufp, unsigned ms,
+          int auto_tick)
 {
   char header[EIRECVBUF];
   char *s=header;
