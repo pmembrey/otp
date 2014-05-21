@@ -99,6 +99,9 @@
 #define ERL_DEMONITOR_P    20
 #define ERL_MONITOR_P_EXIT 21
 
+/* For enabling / disabling auto tick */
+#define ERL_TICK_AUTO      0
+#define ERL_TICK_MANUAL    1
 
 /* -------------------------------------------------------------------- */
 /*           Defines used for ei_get_type_internal() output             */
