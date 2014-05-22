@@ -51,11 +51,11 @@ ei_recv_internal (int fd,
 		  erlang_msg *msg, int *msglenp, 
 		  int staticbufp, unsigned ms)
 {
-  return(ei_recv_internal_with_tick(fd, mbufp, bufsz, msg, msglenp, staticbufp, ms, ERL_TICK_AUTO));
+  return(ei_recv_internal_wt(fd, mbufp, bufsz, msg, msglenp, staticbufp, ms, ERL_TICK_AUTO));
 }
 /* length (4), PASS_THOUGH (1), header, message */
 int 
-ei_recv_internal_with_tick (int fd, 
+ei_recv_internal_wt (int fd, 
 		  char **mbufp, int *bufsz, 
 		  erlang_msg *msg, int *msglenp, 
 		  int staticbufp, unsigned ms,
