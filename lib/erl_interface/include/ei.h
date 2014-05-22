@@ -341,6 +341,9 @@ int ei_xreceive_msg_tmo_mt(int fd, erlang_msg *msg, ei_x_buff *x, unsigned ms);
 int ei_receive_tmo_with_tick(int fd, unsigned char *bufp, int bufsize, unsigned ms, int auto_tick);
 int ei_receive_with_tick(int fd, unsigned char *bufp, int bufsize, int auto_tick);
 
+void ei_send_tock(int fd, int ms);
+
+
 int ei_send(int fd, erlang_pid* to, char* buf, int len);
 int ei_send_tmo(int fd, erlang_pid* to, char* buf, int len, unsigned ms);
 int ei_reg_send(ei_cnode* ec, int fd, char *server_name, char* buf, int len);
