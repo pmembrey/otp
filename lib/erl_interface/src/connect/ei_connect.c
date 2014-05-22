@@ -847,7 +847,6 @@ int ei_receive_tmo(int fd, unsigned char *bufp, int bufsize, unsigned ms)
 int ei_receive_tmo_with_tick(int fd, unsigned char *bufp, int bufsize, unsigned ms, int auto_tick) 
 {
     int len;
-    unsigned char fourbyte[4]={0,0,0,0};
     int res;
  
     if ((res = ei_read_fill_t(fd, (char *) bufp, 4, ms))  != 4) {
@@ -858,7 +857,7 @@ int ei_receive_tmo_with_tick(int fd, unsigned char *bufp, int bufsize, unsigned 
     /* Tick handling */
     if ((len = get_int32(bufp)) == ERL_TICK && auto_tick == ERL_TICK_AUTO) 
     {
-	ei_write_fill_t(fd, (char *) fourbyte, 4, ms);
+    ei_send_tock(fd, ms);
 	/* FIXME ok to ignore error or timeout? */
 	erl_errno = EAGAIN;
 	return ERL_TICK;
