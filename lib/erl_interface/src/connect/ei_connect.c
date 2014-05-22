@@ -855,9 +855,11 @@ int ei_receive_tmo_wt(int fd, unsigned char *bufp, int bufsize, unsigned ms, int
     }
     
     /* Tick handling */
-    if ((len = get_int32(bufp)) == ERL_TICK && auto_tick == ERL_TICK_AUTO) 
+    if ((len = get_int32(bufp)) == ERL_TICK)
     {
-    ei_send_tock(fd, ms);
+    if(auto_tick == ERL_TICK_AUTO){
+        ei_send_tock(fd, ms);
+    }
 	/* FIXME ok to ignore error or timeout? */
 	erl_errno = EAGAIN;
 	return ERL_TICK;
