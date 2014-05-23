@@ -86,7 +86,7 @@ ei_recv_internal_wt (int fd,
   /* got tick - respond and return */
   if (!len) {
     if(auto_tick == ERL_TICK_AUTO){
-        ei_send_tock(fd, ms);
+        ei_send_tock_tmo(fd, ms);
     }
     *msglenp = 0;
     return 0;			/* maybe flag ERL_EAGAIN [sverkerw] */

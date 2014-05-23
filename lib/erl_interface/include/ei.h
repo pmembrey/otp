@@ -341,8 +341,8 @@ int ei_xreceive_msg_wt(int fd, erlang_msg *msg, ei_x_buff *x);
 int ei_xreceive_msg_tmo_wt(int fd, erlang_msg *msg, ei_x_buff *x, unsigned ms);
 
 
-void ei_send_tock(int fd, int ms);
-
+void ei_send_tock_tmo(int fd, int ms);
+void ei_send_tock(int fd);
 
 int ei_send(int fd, erlang_pid* to, char* buf, int len);
 int ei_send_tmo(int fd, erlang_pid* to, char* buf, int len, unsigned ms);

@@ -24,8 +24,14 @@
 #include "ei_portio.h"
 
 void
-ei_send_tock(int fd, int ms)
+ei_send_tock_tmo(int fd, int ms)
 {
     char tock[] = {0,0,0,0};
     ei_write_fill_t(fd, tock, sizeof(tock), ms);
+}
+
+void
+ei_send_tock(int fd)
+{
+    ei_send_tock_tmo(fd, 0);
 }

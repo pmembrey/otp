@@ -864,7 +864,7 @@ int ei_receive_tmo_wt_actual(int fd, unsigned char *bufp, int bufsize, unsigned 
     if ((len = get_int32(bufp)) == ERL_TICK)
     {
     if(auto_tick == ERL_TICK_AUTO){
-        ei_send_tock(fd, ms);
+        ei_send_tock_tmo(fd, ms);
     }
 	/* FIXME ok to ignore error or timeout? */
 	erl_errno = EAGAIN;

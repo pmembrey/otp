@@ -26,5 +26,6 @@
 
 #ifndef _EI_SEND_TOCK_H
 #define _EI_SEND_TOCK
-void ei_send_tock(int fd, int ms);
+void ei_send_tock_tmo(int fd, int ms);
+void ei_send_tock(int fd);
 #endif /* _EI_SEND_TOCK_H */
