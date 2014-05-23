@@ -38,8 +38,6 @@
 #include "ei_trace.h"
 #include "show_msg.h"
 
-#include "ei_send_tock.h"
-
 #include <errno.h>
 
 #define EIRECVBUF 2048 /* largest possible header is approx 1300 bytes */

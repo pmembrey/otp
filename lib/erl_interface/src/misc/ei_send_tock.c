@@ -20,7 +20,6 @@
  */
 #include "ei.h"
 #include "ei_internal.h"
-#include "ei_send_tock.h"
 #include "ei_portio.h"
 
 void

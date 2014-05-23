@@ -9,8 +9,7 @@ $(ST_OBJDIR)/ei_resolve.o: connect/ei_resolve.c misc/eidef.h \
  misc/ei_locking.h
 $(ST_OBJDIR)/eirecv.o: connect/eirecv.c misc/eidef.h $(TARGET)/config.h \
  ../include/ei.h misc/eiext.h connect/eirecv.h misc/ei_portio.h \
- misc/ei_internal.h misc/putget.h misc/ei_trace.h misc/show_msg.h \
- misc/ei_send_tock.h
+ misc/ei_internal.h misc/putget.h misc/ei_trace.h misc/show_msg.h
 $(ST_OBJDIR)/send.o: connect/send.c misc/eidef.h $(TARGET)/config.h \
  ../include/ei.h misc/eiext.h connect/eisend.h misc/putget.h \
  connect/ei_connect_int.h misc/ei_internal.h misc/ei_trace.h \
@@ -322,8 +321,7 @@ $(MT_OBJDIR)/ei_resolve.o: connect/ei_resolve.c misc/eidef.h \
  misc/ei_locking.h
 $(MT_OBJDIR)/eirecv.o: connect/eirecv.c misc/eidef.h $(TARGET)/config.h \
  ../include/ei.h misc/eiext.h connect/eirecv.h misc/ei_portio.h \
- misc/ei_internal.h misc/putget.h misc/ei_trace.h misc/show_msg.h \
- misc/ei_send_tock.h
+ misc/ei_internal.h misc/putget.h misc/ei_trace.h misc/show_msg.h
 $(MT_OBJDIR)/send.o: connect/send.c misc/eidef.h $(TARGET)/config.h \
  ../include/ei.h misc/eiext.h connect/eisend.h misc/putget.h \
  connect/ei_connect_int.h misc/ei_internal.h misc/ei_trace.h \
@@ -635,8 +633,7 @@ $(MD_OBJDIR)/ei_resolve.o: connect/ei_resolve.c misc/eidef.h \
  misc/ei_locking.h
 $(MD_OBJDIR)/eirecv.o: connect/eirecv.c misc/eidef.h $(TARGET)/config.h \
  ../include/ei.h misc/eiext.h connect/eirecv.h misc/ei_portio.h \
- misc/ei_internal.h misc/putget.h misc/ei_trace.h misc/show_msg.h \
- misc/ei_send_tock.h
+ misc/ei_internal.h misc/putget.h misc/ei_trace.h misc/show_msg.h
 $(MD_OBJDIR)/send.o: connect/send.c misc/eidef.h $(TARGET)/config.h \
  ../include/ei.h misc/eiext.h connect/eisend.h misc/putget.h \
  connect/ei_connect_int.h misc/ei_internal.h misc/ei_trace.h \
@@ -948,8 +945,7 @@ $(MDD_OBJDIR)/ei_resolve.o: connect/ei_resolve.c misc/eidef.h \
  misc/ei_locking.h
 $(MDD_OBJDIR)/eirecv.o: connect/eirecv.c misc/eidef.h $(TARGET)/config.h \
  ../include/ei.h misc/eiext.h connect/eirecv.h misc/ei_portio.h \
- misc/ei_internal.h misc/putget.h misc/ei_trace.h misc/show_msg.h \
- misc/ei_send_tock.h
+ misc/ei_internal.h misc/putget.h misc/ei_trace.h misc/show_msg.h
 $(MDD_OBJDIR)/send.o: connect/send.c misc/eidef.h $(TARGET)/config.h \
  ../include/ei.h misc/eiext.h connect/eisend.h misc/putget.h \
  connect/ei_connect_int.h misc/ei_internal.h misc/ei_trace.h \
