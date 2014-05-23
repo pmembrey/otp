@@ -333,8 +333,8 @@ int ei_receive_msg_tmo(int fd, erlang_msg* msg, ei_x_buff* x, unsigned ms);
 int ei_xreceive_msg(int fd, erlang_msg* msg, ei_x_buff* x);
 int ei_xreceive_msg_tmo(int fd, erlang_msg* msg, ei_x_buff* x, unsigned ms);
 
-int ei_receive_wt(int fd, unsigned char *bufp, int bufsize, int auto_tick);
-int ei_receive_tmo_wt(int fd, unsigned char *bufp, int bufsize, unsigned ms, int auto_tick);
+int ei_receive_wt(int fd, unsigned char *bufp, int bufsize);
+int ei_receive_tmo_wt(int fd, unsigned char *bufp, int bufsize, unsigned ms);
 int ei_receive_msg_wt(int fd, erlang_msg* msg, ei_x_buff* x);
 int ei_receive_msg_tmo_wt(int fd, erlang_msg* msg, ei_x_buff* x, unsigned ms);
 int ei_xreceive_msg_wt(int fd, erlang_msg *msg, ei_x_buff *x);

@@ -837,14 +837,20 @@ error:
 
 int ei_receive_tmo(int fd, unsigned char *bufp, int bufsize, unsigned ms)
 {
-    return(ei_receive_tmo_wt(fd, bufp, bufsize, ms, ERL_TICK_AUTO));
+    return(ei_receive_tmo_wt_actual(fd, bufp, bufsize, ms, ERL_TICK_AUTO));
+}
+
+
+int ei_receive_tmo_wt(int fd, unsigned char *bufp, int bufsize, unsigned ms)
+{
+    return(ei_receive_tmo_wt_actual(fd, bufp, bufsize, ms, ERL_TICK_MANUAL));
 }
 /* Receives a message from an Erlang socket.
  * If the message was a TICK it is immediately
  * answered. Returns: ERL_ERROR, ERL_TICK or
  * the number of bytes read.
  */
-int ei_receive_tmo_wt(int fd, unsigned char *bufp, int bufsize, unsigned ms, int auto_tick) 
+int ei_receive_tmo_wt_actual(int fd, unsigned char *bufp, int bufsize, unsigned ms, int auto_tick) 
 {
     int len;
     int res;
@@ -885,9 +891,16 @@ int ei_receive(int fd, unsigned char *bufp, int bufsize)
     return ei_receive_tmo(fd, bufp, bufsize, 0);
 } 
 
-int ei_receive_wt(int fd, unsigned char *bufp, int bufsize, int auto_tick)
+
+int ei_receive_wt(int fd, unsigned char *bufp, int bufsize) 
 {
-    return ei_receive_tmo_wt(fd, bufp, bufsize, 0, auto_tick);
+    return ei_receive_tmo_wt_actual(fd, bufp, bufsize, 0, ERL_TICK_MANUAL);
+} 
+
+
+int ei_receive_wt_actual(int fd, unsigned char *bufp, int bufsize, int auto_tick)
+{
+    return ei_receive_tmo_wt_actual(fd, bufp, bufsize, 0, auto_tick);
 }
 
 int ei_reg_send_tmo(ei_cnode* ec, int fd, char *server_name,
